@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sranan Gold concessions</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoicmtlbXBlciIsImEiOiJjbWMycmZtd24wYWpvMmxwemR6MWltNzZrIn0.I_ZpY7zFkX0nZOspc32xZg";
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/satellite-streets-v12",
+        center: [-54.67, 4.13],
+        zoom: 11,
+        projection: "globe",
+      });
+      map.on("style.load", () => {
+        map.setFog({});
+        map.addControl(new mapboxgl.NavigationControl());
+
+        map.addSource("sranan_gold", {
+          type: "geojson",
+          data: "./sranan_gold.geojson",
+        });
+
+        map.addLayer({
+          id: "sranan_gold_layer",
+          type: "fill",
+          source: "sranan_gold",
+          layout: {},
+          paint: {
+            "fill-color": "red",
+            "fill-opacity": 0.5,
+            "fill-outline-color": "red",
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
